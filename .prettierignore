@@ -1,0 +1,5 @@
+!.vuepress
+
+# Ignore artifacts:
+build
+coverage
