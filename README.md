@@ -8,7 +8,7 @@
 
 本仓库是慕课网[大前端](https://class.imooc.com/sale/webfullstack)课程笔记，重点是视频学习的辅助资料（扩展资料）。
 
-同步github pages：[地址](https://toimc.github.io/notes-page/)
+同步github pages：[地址](https://toimc-team.github.io/notes-page/)
 
 同步gitee + gitee pages：[地址](https://toimc.gitee.io/notes-page)
 
