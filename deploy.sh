@@ -18,8 +18,11 @@ git config user.email "brian@toimc.com"
 git add -A
 git commit -m 'update commit'
 
-git remote add gitee git@gitee.com:toimc/docs.git
-# 部署到 https://<USERNAME>.github.io/<REPO>
+# 部署到 github
+git remote add github git@toimc:toimc/notes-page.git
+git push -f github master
+
+git remote add gitee git@gitee.com:toimc/notes-page.git
 git push -f gitee master
 
 cd -

@@ -33,7 +33,7 @@ module.exports = {
       }
     }
   },
-  base: process.env.NODE_ENV === 'development' ? '/' : '/docs/',
+  base: process.env.NODE_ENV === 'development' ? '/' : '/notes-page/',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
