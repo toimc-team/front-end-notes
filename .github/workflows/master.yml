@@ -36,21 +36,21 @@ jobs:
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@4.1.0
       with:
-        repository-name: toimc/front-end-notes # The branch the action should deploy to.
+        repository-name: toimc/notes-page # The branch the action should deploy to.
         branch: master
         folder: ./src/.vuepress/dist # The folder the action should deploy.
         ssh-key: ${{ secrets.DEPLOY_KEY }}
 
-    - name: Sync to Gitee
+    - name: Sync to Gitee Page
       uses: wearerequired/git-mirror-action@master
       env:
         # 注意在 Settings->Secrets 配置 GITEE_PRIVATE_KEY
         SSH_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
       with:
         # 注意替换为你的 GitHub 源仓库地址
-        source-repo: git@github.com:toimc/front-end-notes.git
+        source-repo: git@github.com:toimc/notes-page.git
         # 注意替换为你的 Gitee 目标仓库地址
-        destination-repo: git@gitee.com:toimc/front-end-notes.git
+        destination-repo: git@gitee.com:toimc/notes-page.git
 
     - name: Build Gitee Pages
       uses: yanglbme/gitee-pages-action@master
@@ -60,4 +60,4 @@ jobs:
         # 注意在 Settings->Secrets 配置 GITEE_PASSWORD
         gitee-password: ${{ secrets.GITEE_PASSWORD }}
         # 注意替换为你的 Gitee 仓库，仓库名严格区分大小写，请准确填写，否则会出错
-        gitee-repo: toimc/front-end-notes
+        gitee-repo: toimc/notes-page
