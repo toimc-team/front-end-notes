@@ -14,7 +14,6 @@ const genSidebarConfig = (dir, { hasSub, exclude }) => {
     item = subDir ? subDir + '/' + path.basename(item, '.md') : path.basename(item, '.md')
     arr.push(item)
   })
-  // console.log('🚀 ~ file: config.js ~ line 26 ~ genSidebarConfig ~ subDir', subDir)
   arr.unshift(subDir + '/')
   return arr
 }
