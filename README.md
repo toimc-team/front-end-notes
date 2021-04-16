@@ -32,7 +32,7 @@ npm run dev
 
 ## 工作目录
 
-```json
+```
 .
 ├── .eslintignore
 ├── .eslintrc.js

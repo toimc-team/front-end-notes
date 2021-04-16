@@ -36,7 +36,7 @@ jobs:
     - name: Deploy Github Pages🚀
       uses: JamesIves/github-pages-deploy-action@4.1.0
       with:
-        repository-name: toimc/notes-page # The branch the action should deploy to.
+        repository-name: toimc-team/notes-page # The branch the action should deploy to.
         branch: master
         folder: ./src/.vuepress/dist # The folder the action should deploy.
         ssh-key: ${{ secrets.DEPLOY_KEY }}
@@ -48,7 +48,7 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
       with:
         # 注意替换为你的 GitHub 源仓库地址
-        source-repo: git@github.com:toimc/notes-page.git
+        source-repo: git@github.com:toimc-team/notes-page.git
         # 注意替换为你的 Gitee 目标仓库地址
         destination-repo: git@gitee.com:toimc/notes-page.git
 
