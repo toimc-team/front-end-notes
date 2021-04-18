@@ -116,15 +116,15 @@ const nav = [
         items: [
           {
             text: '社区PC',
-            link: '/project/miniapp/'
+            link: '/project/community-pc/'
           },
           {
             text: '管理后台',
-            link: '/project/miniapp/'
+            link: '/project/community-admin/'
           },
           {
             text: 'WebApp',
-            link: '/project/miniapp/'
+            link: '/project/community-webapp/'
           }
         ]
       },
@@ -133,15 +133,15 @@ const nav = [
         items: [
           {
             text: '微信小程序',
-            link: '/project/miniapp/'
+            link: '/project/community-miniapp/'
           },
           {
             text: 'Flutter 2.0',
-            link: '/project/miniapp/'
+            link: '/project/community-flutter/'
           },
           {
             text: 'Electron桌面端',
-            link: '/project/miniapp/'
+            link: '/project/community-electron/'
           }
         ]
       },
