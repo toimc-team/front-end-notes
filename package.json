@@ -8,8 +8,7 @@
     "dev": "vuepress dev src",
     "build": "vuepress build src",
     "build:gitee": "vuepress build src",
-    "upload": "node upload.js",
-    "export": "vuepress export src"
+    "upload": "node upload.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +17,6 @@
   "author": "brian",
   "license": "GPL-3.0",
   "devDependencies": {
-    "@snowdog/vuepress-plugin-pdf-export": "^1.1.0",
     "@vuepress/plugin-back-to-top": "^1.8.2",
     "@vuepress/plugin-medium-zoom": "^1.8.2",
     "@vuepress/plugin-nprogress": "^1.8.2",

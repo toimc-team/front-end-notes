@@ -126,7 +126,7 @@ module.exports = {
   plugins: [
     '@vuepress/plugin-back-to-top',
     '@vuepress/plugin-medium-zoom',
-    '@vuepress/nprogress',
-    '@snowdog/vuepress-plugin-pdf-export'
+    '@vuepress/nprogress'
+    // '@snowdog/vuepress-plugin-pdf-export'
   ]
 }
