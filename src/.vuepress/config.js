@@ -222,8 +222,35 @@ const nav = [
     ]
   },
   {
-    text: '更新日志',
-    link: '/update-logs/'
+    text: '关于',
+    items: [
+      {
+        text: '日志',
+        items: [
+          {
+            text: '更新日志',
+            link: '/course/update-logs/'
+          },
+          {
+            text: 'github源码',
+            link: 'https://github.com/toimc-team/front-end-notes'
+          },
+          {
+            text: 'gitee源码',
+            link: 'https://gitee.com/toimc/front-end-notes'
+          }
+        ]
+      },
+      {
+        text: '参与贡献',
+        items: [
+          {
+            text: '博文规范',
+            link: '/course/notes/'
+          }
+        ]
+      }
+    ]
   }
 ]
 
@@ -232,7 +259,7 @@ const sidebar = {
     {
       title: '小程序',
       collapsable: false,
-      children: genSidebarConfig('project/miniapp', siderBarOptions)
+      children: genSidebarConfig('project/community-miniapp', siderBarOptions)
     },
     {
       title: 'React',
@@ -240,6 +267,18 @@ const sidebar = {
       children: [
         'react/'
       ]
+    }
+  ],
+  '/course/': [
+    {
+      title: 'vuepress使用规范',
+      collapsable: false,
+      children: genSidebarConfig('course/vuepress', siderBarOptions)
+    },
+    {
+      title: '博文规范',
+      collapsable: false,
+      children: genSidebarConfig('course/notes', siderBarOptions)
     }
   ],
   '/': [

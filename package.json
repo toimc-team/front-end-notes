@@ -6,9 +6,7 @@
   "scripts": {
     "prepare": "rimraf src/.vuepress/dist",
     "dev": "vuepress dev src",
-    "build": "vuepress build src",
-    "build:gitee": "vuepress build src",
-    "upload": "node upload.js"
+    "build": "vuepress build src"
   },
   "repository": {
     "type": "git",
