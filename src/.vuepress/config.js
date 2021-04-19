@@ -245,6 +245,10 @@ const nav = [
         text: '参与贡献',
         items: [
           {
+            text: 'VuePress配置',
+            link: '/course/vuepress/'
+          },
+          {
             text: '博文规范',
             link: '/course/notes/'
           }
