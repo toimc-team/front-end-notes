@@ -139,7 +139,7 @@ $ docker run --name jenkins_test -p 11005:8080 -p 50000:50000 jenkins/jenkins:lt
 
 安装完成重启Jenkins后生效。
 
-**基于角色安全管理**
+### 基于角色安全管理
 
 点击[系统管理] > [安全] > [全局安全配置] > [授权策略]，选择 `Role-Based Strategy`，然后保存，再回退到[系统管理] > [安全]，可以看到多出了一个菜单：
 
@@ -149,7 +149,7 @@ $ docker run --name jenkins_test -p 11005:8080 -p 50000:50000 jenkins/jenkins:lt
 
 ![](https://img-blog.csdnimg.cn/20210324155746639.png)
 
-**基于安全矩阵**
+### 基于安全矩阵
 
 在[授权策略]中选择`安全矩阵`，这个是基于用户的权限配置，这里需要注意的是需要吧管理员添加进来，如果没有添加是没有权限做任何事的，切记！！！
 
@@ -157,13 +157,160 @@ $ docker run --name jenkins_test -p 11005:8080 -p 50000:50000 jenkins/jenkins:lt
 
 
 ## 创建第一个完整的自动化项目
-这里以Gitee作为代码仓库，也可以使用Github/Gitlab.
+这里以`Gitee`作为代码仓库，也可以使用`Github`/`Gitlab`等仓库。
+
 （假设已经安装好Jenkins）
+
+
 ### 创建git项目
 
+
 ### 安装Jenkins插件
-Gitee  NodeJS
+
+
+**安装Gitee插件**
+
+因为这里使用了`Gitee`，我们需要在`Jenkins`中安装Gitee插件：
+
+![](https://img-blog.csdnimg.cn/20210324164001297.png)
+
+> PS：安装完记得重启Jenkins。
+
+**配置Gitee**
+
+在[Jenkins] > [系统管理] > [系统配置] > [Gitee配置] 配置 `Gitee` 信息：
+
+![](https://img-blog.csdnimg.cn/20210324164650789.png)
+
+- 链接名：输入Gitee或随便输入你想要的名称
+- Gitee域名URL：输入Gitee完整的URL地址 `https://gitee.com`
+- 证书令牌：如没有添加需要新建一个，点击添加（如下图）
+
+![](https://img-blog.csdnimg.cn/20210324170014881.png)
+
+- Domain：选择全局凭据
+- 类型：选择Gitee API令牌
+- 范围：选择全局
+- Gitee APIV5 私人令牌，[点击获取](https://gitee.com/profile/personal_access_tokens)
+- ID 和 描述就随便写不一样的就行
+
+添加完令牌就直接选择就行，然后点击【测试链接】，如果出现`成功`则表示配置正确：
+
+![](https://img-blog.csdnimg.cn/20210324170446534.png)
+
+**安装NodeJS**
+
+因为我们的Vue项目是基于 `NodeJS` 来打包构建的，所以需要在 `Jenkins` 中安装插件：
+
+![](https://img-blog.csdnimg.cn/20210324203031178.png)
+
+**配置NodeJS**
+
+在[系统管理] > [系统配置] > [全局工具配置] > [NodeJS] 点击【NodeJS安装】：
+
+![](https://img-blog.csdnimg.cn/20210420210529926.png)
+
+> PS: 建议 `NodeJS` 版本不要选太高，选最新的LTS版本即可。
+
 
 ### 新建构建任务
 
-### Vue项目构建及部署
+在 `Jenkins` 首页点击【新建任务】开始第一个流水线的构建，选择`构建一个自由风格的软件项目` 点击保存即可创建构建项目：
+
+![](https://img-blog.csdnimg.cn/20210324170835154.png)
+
+新建完成后进入配置，流水线会按照 [General] > [源码管理] > [构建触发器] > [构建环境] > [构建] > [构建后操作]的步骤来执行自动化任务。
+
+#### General
+
+![](https://img-blog.csdnimg.cn/20210324171712229.png)
+
+#### 源码管理
+
+- 选择 `Git` 选项
+- Repository URL: 创建的git项目地址
+- Credentials：点击添加一个凭据（注意 `Gitee API Token` 凭据不可用于源码管理的凭据，只用于`gitee`插件的 API 调用凭据）
+- 点击【高级】 Advanced 按钮，Name输入`origin`，Refspec输入`+refs/heads/*:refs/remotes/origin/*`
+- 指定分支：`master`
+
+![](https://img-blog.csdnimg.cn/20210324194748464.png)
+
+#### 触发器配置
+
+这里选择配置 `push` 代码立即触发构建任务，勾选 `Gitee webhook触发构建`，后面有个地址这个后面需要配置到`Gitee`，`Gitee`触发构建策略勾选推送代码，其他先默认就行。
+
+![](https://img-blog.csdnimg.cn/20210324193112270.png)
+
+后面有个 `Gitee WebHook密码` 栏位需要配置到Gitee，点击生成就会生成一个密码：
+
+![](https://img-blog.csdnimg.cn/20210324193145702.png)
+
+打开 `Gitee` 项目的管理选项卡，左侧有个[WebHooks]菜单 ，点击【添加webHook】:
+
+![](https://img-blog.csdnimg.cn/20210324193317281.png)
+
+将上一步 `Jenkins` 生成的`URL`和`密码`填进去，点击【添加】：
+
+![](https://img-blog.csdnimg.cn/20210324193430983.png)
+
+
+#### 构建环境
+
+修改构建任务的构建环境，勾选 `Provide Node & npm bin/ folder to PATH` ，默认会选择`Jenkins`安装的`NodeJS`版本:
+
+![](https://img-blog.csdnimg.cn/20210420221323687.png)
+
+#### 构建脚本
+
+选择【执行shell】：
+![](https://img-blog.csdnimg.cn/20210324200306648.png)
+
+先随便写一个shell脚本试试：
+![](https://img-blog.csdnimg.cn/2021032420025598.png)
+
+保存后，触发一次提交，看看`控制台输出`：
+
+![](https://img-blog.csdnimg.cn/20210324201532828.png)
+
+
+
+### Vue项目构建及部署`
+
+vue项目通过 `NodeJS` 构建后，需要将构建后的 `dist` 文件夹的内容部署到云服务器，因为 `Jenkins` 是 `Docker` 容器创建的，容器内部不能直接移动文件，因为没有挂载`volumn`，所以这里可以使用 `SSH` 的方式来传输容器的构建文件到`nginx`服务器。先来安装下`Publish over SSH`，进入插件管理：
+
+![](https://img-blog.csdnimg.cn/20210325193332944.png)
+
+安装完成后，在[系统管理] > [系统配置] 会多出一个`Publish over SSH`:
+
+在云服务器生成密钥：
+```bash
+$ ssh-keygen -t rsa -C "xxxx@qq.com"
+# 将公钥放到authorized_keys，否则SSH Server配置会不成功
+$ cat id_rsa.pub >> authorized_keys
+```
+
+填写私钥：
+![](https://img-blog.csdnimg.cn/20210406223639894.png)
+
+设置服务器的信息：
+![](https://img-blog.csdnimg.cn/2021040623530727.png)
+
+点击 【Test Configuration】按钮，左侧显示 `Success` 即表示`SSH`可以连接成功。
+
+
+构建步骤修改脚本：
+
+![](https://img-blog.csdnimg.cn/2021040811374362.png)
+
+先添加一个`Transfer Set `删除部署目录的文件，如`nginx`配置的文件目录为`/usr/share/nginx/flower_html/`：
+
+![](https://img-blog.csdnimg.cn/20210407153217299.png)
+
+再加一个 `Transfer Set` 传送文件到部署目录：
+
+![](https://img-blog.csdnimg.cn/20210407153314897.png)
+
+部署效果：
+
+![](https://img-blog.csdnimg.cn/2021040811382869.png)
+
