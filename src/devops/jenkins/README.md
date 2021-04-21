@@ -5,11 +5,18 @@ sidebar: auto
 # Jenkins
 
 ## 什么是CI/CD
-`CI/CD`即持续集成(Continuous Integration)、持续交付(Continuous Delivery)和持续部署(Continuous Deployment)，是一种通过引入自动化构建部署来频繁想客户交付的方法。看下图介绍了DevOps流程：
+`CI/CD`即持续集成(Continuous Integration)、持续交付(Continuous Delivery)和持续部署(Continuous Deployment)，是一种通过引入自动化构建部署来频繁想客户交付的方法。`CI/CD`是`DevOps`的基础核心，如果没有`CI/CD`自动化的工具和流程，`DevOps`是没有意义的，来看下图`DevOps`工作流程图：
 
 ![](./assets/20210308203919800.png)
 
-传统的项目构建部署都是人工操作的，本地测试、打包、上传到服务器部署、测试，然后发现bug、重现bug、修改bug、本地测试、再打包、上传到服务器部署。。。。。。如此循环。而自动化的出现正是解决这一重复的步骤，让繁琐重复的步骤交给脚本自动完成，自动化流程的意义：
+具体的流程为：
+- 先是计划`plan`，编码`code`，然后编译`build`，测试`test`（Dev）
+- 然后发布`release`，部署`deploy`，运维`operate`，监控`monitor`（Ops）
+- 然后发现问题或有新的需求，就重新计划plan...如此循环
+
+这就是完整的`DevOps`流程，试想如果没有自动化，那将是很繁重的任务。
+
+与传统的项目部署相比，自动化流程的意义：
 - 减少人为失误，提高软件质量
 - 效率迭代，便捷部署
 - 快速交付，便于管理
@@ -18,7 +25,7 @@ sidebar: auto
 **主流的自动化软件对比**
 ![](./assets/2021031614533474.png)
 
-从上图可以看出主要的软件有Jenkins,Travis CI,Circle CI, 后面两个是云平台，而且只支持公有Public项目，私有项目需要付费；Jenkins支持本地化部署，而且免费，可高度配置，是开源CI&CD软件领导者， 提供超过1000个插件来支持构建、部署、自动化， 满足任何项目的需要。
+从上图可以看出主要的软件有`Jenkins`,`Travis CI`,`Circle CI`, 后面两个是云平台，而且只支持公有`Public`项目，私有项目需要付费；`Jenkins`支持本地化部署，而且免费，可高度配置，是开源CI&CD软件领导者， 提供超过1000个插件来支持构建、部署、自动化， 满足任何项目的需要。
 
 ## Jenkins 介绍
 
@@ -34,6 +41,8 @@ Jenkins 支持各种运行方式，可通过系统包、Docker 或者通过一�
 - 在本地编辑器编辑代码，提交到`Gitee`
 - `git push` 操作触发 `Jenkins` 自动部署（`Jenkins` 安装在 `Docker` 中）
 - `Jenkins` 开始构建、打包、最后部署到云服务器
+
+> PS：也可以使用GitLab,GitHub等代码仓库。
 
 ## 安装Jenkins
 
@@ -75,15 +84,27 @@ $ docker run --name jenkins_test -p 11005:8080 -p 50000:50000 jenkins/jenkins:lt
 
 ![解锁Jenkins](./assets/20210323231948966.png)
 
+点击【继续】，然后开始安装插件：
+
 ![自定义Jenkins](./assets/20210323233652482.png)
+
+选择【安装推荐的插件】开始安装：
 
 ![新手入门](./assets/20210323233844979.png)
 
+创建第一个管理员用户：
+
 ![创建第一个管理员用户](./assets/20210323234333756.png)
+
+确认`Jenkins`访问路径：
 
 ![实例配置](./assets/20210323234459827.png)
 
+安装完毕，开始使用：
+
 ![Jenkins已就绪](./assets/20210323234535102.png)
+
+首页欢迎界面：
 
 ![开始使用](./assets/20210323234642602.png)
 
@@ -157,13 +178,15 @@ $ docker run --name jenkins_test -p 11005:8080 -p 50000:50000 jenkins/jenkins:lt
 
 
 ## 创建第一个完整的自动化项目
-这里以`Gitee`作为代码仓库，也可以使用`Github`/`Gitlab`等仓库。
-
-（假设已经安装好Jenkins）
 
 
 ### 创建git项目
+这里以`Gitee`作为代码仓库，也可以使用`Github`/`Gitlab`等仓库。
 
+假设创建的仓库地址是：`https://gitee.com/xxx/jenkins_test.git`（创建过程很简单，就不演示了）
+
+
+> PS：这里可以创建私有项目。
 
 ### 安装Jenkins插件
 
@@ -282,27 +305,29 @@ vue项目通过 `NodeJS` 构建后，需要将构建后的 `dist` 文件夹的�
 
 安装完成后，在[系统管理] > [系统配置] 会多出一个`Publish over SSH`:
 
-在云服务器生成密钥：
+在需要部署的目标云服务器生成密钥：
 ```bash
 $ ssh-keygen -t rsa -C "xxxx@qq.com"
 # 将公钥放到authorized_keys，否则SSH Server配置会不成功
 $ cat id_rsa.pub >> authorized_keys
 ```
 
-填写私钥：
+在 `Key` 栏位填写私钥：
+
 ![](./assets/20210406223639894.png)
 
-设置服务器的信息：
+设置 `SSH` 目标服务器的信息：
+
 ![](./assets/2021040623530727.png)
 
 点击 【Test Configuration】按钮，左侧显示 `Success` 即表示`SSH`可以连接成功。
 
 
-构建步骤修改脚本：
+[构建步骤]修改下 `shell` 脚本，进行 `vue` 的`安装`和`打包`：
 
 ![](./assets/2021040811374362.png)
 
-先添加一个`Transfer Set `删除部署目录的文件，如`nginx`配置的文件目录为`/usr/share/nginx/flower_html/`：
+先添加一个`Transfer Set `删除部署目录的文件，假如 `nginx` 配置的 `root` 目录为`/usr/share/nginx/flower_html/`：
 
 ![](./assets/20210407153217299.png)
 
@@ -310,7 +335,9 @@ $ cat id_rsa.pub >> authorized_keys
 
 ![](./assets/20210407153314897.png)
 
-部署效果：
+都设置好了，来触发一次构建，部署效果：
 
 ![](./assets/2021040811382869.png)
+
+有了 `Jenkins` 自动化部署，以后我们只需要关注代码层面即可，修改完代码，提交到 `Git` 仓库，然后 `Jenkins` 会自动帮我们构建、打包、部署，是不是很方便呢。
 
