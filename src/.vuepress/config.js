@@ -232,7 +232,7 @@ const sidebar = {
     {
       title: '小程序',
       collapsable: false,
-      children: genSidebarConfig('project/miniapp', siderBarOptions)
+      children: genSidebarConfig('project/community-miniapp', siderBarOptions)
     },
     {
       title: 'React',
