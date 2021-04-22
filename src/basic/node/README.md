@@ -131,7 +131,7 @@ router.get('/user', async ctx => {
 const Koa = require('koa')
 const Router = require('@koa/router')
 const app = new Koa()
-const router = new Router({ prefix: '/api/v1' })
+const router = new Router({ prefix: '/api/v1' }) // 添加接口前缀
 
 router.get('/', async ctx => {
   ctx.body = {
@@ -166,7 +166,7 @@ app.listen(3003)
 
 Koa 通过 use 方法注册和串联中间件，也就是洋葱模型；所谓洋葱模型，就是指每一个 Koa 中间件都是一层洋葱圈，它即可以掌管请求进入，也可以掌管响应返回。换句话说：外层的中间件可以影响内层的请求和响应阶段，内层的中间件只能影响外层的响应阶段。
 <img src="./assets/85988383413dec71e0d17d991ac8a5a.png" style="display: block; box-shadow: 2px 1px 1px #d0c6c629;" />
-执行顺序：按照 app.use()的顺序执行，中间件可以通过 await next()来执行下一个中间件，同时在最后一个中间件执行完成后，依然有恢复执行的能力。即，通过洋葱模型，await next()控制调用 “下游”中间件，直到 “下游”没有中间件且堆栈执行完毕，最终流回“上游”中间件。这种方式有个优点，特别是对于日志记录以及错误处理等需要非常友好。
+执行顺序按照 app.use()的顺序执行，中间件可以通过 await next()来执行下一个中间件，同时在最后一个中间件执行完成后，依然有恢复执行的能力。即，通过洋葱模型，await next()控制调用 “下游”中间件，直到 “下游”没有中间件且堆栈执行完毕，最终流回“上游”中间件。这种方式有个优点，特别是对于日志记录以及错误处理等需要非常友好。
 
 下面这段代码的结果就能很好的诠释，示例：
 
@@ -211,20 +211,26 @@ this is a middleware 1 end
 - 在 params 中取值，`eg：http://localhost:3003/api/v1/user/1`
 
 ```javascript
-//请求时若为：http://localhost:3003/api/v1/user
+// 前端请求
+await axios.post('http://localhost:3003/api/v1/user/1')
+
+// 服务端
 router.post('/user/:id',async ctx => {
     //获取url的id
-  cosnt { id } = ctx.params;//{id: 1}
+  cosnt { id } = ctx.params; // { id: 1 }
 })
 ```
 
 - 在 query 中取值，也就是获取问号后面的。
 
-```javascript
+```JavaScript
+// 前端
 await axios.post('http://localhost:3003/api/v1/user?name=Forest&age=18')
+
+// 服务端
 router.post('/user', async ctx => {
   //获取url的id
-  const { name, age } = ctx.request.query //{name: Forest, age: 18}
+  const { name, age } = ctx.request.query // { name: Forest, age: 18 }
 })
 ```
 
@@ -247,7 +253,7 @@ axios
 //在服务端获取则是：
 router.post('/user', async ctx => {
   //获取 url 的 id
-  const { Author } = ctx.request.header //{Author: token}
+  const { Author } = ctx.request.header // { Author: token }
 })
 ```
 
@@ -255,12 +261,13 @@ router.post('/user', async ctx => {
   就以 `koa-body` 为例，首先安装 `npm i koa-body -S`，再引入：
 
 ```javascript
+// 服务端
 const body = require('koa-body);
 //然后在注册中间件：
 app.use(body());
 //在服务端获取则是：
 router.post('/user', async ctx => {
-    const res = ctx.request.body;//{name: 'Foreset', age: 18}
+    const res = ctx.request.body; // { name: 'Foreset', age: 18 }
 });
 
 
@@ -287,7 +294,6 @@ router.get('/', async ctx => {
 })
 
 router.get('/user', async ctx => {
-  // const { name, age } = ctx.query
   ctx.body = {
     status: 200,
     message: 'success',
@@ -303,7 +309,6 @@ router.get('/user', async ctx => {
 
 router.get('/user/:id', async ctx => {
   const { id } = ctx.params
-  console.log('id:', id)
   ctx.body = {
     status: 200,
     message: 'success',
@@ -328,11 +333,11 @@ router.post('/user', async ctx => {
   }
 })
 
-app.use(koaBody()).use(router.routes()).use(router.allowedMethods)
+app.use(koaBody()).use(router.routes()).use(router.allowedMethods())
 
 app.listen(3003)
 ```
 
 ::: tip
-注意 koa-body 中间件的引入顺序必须在 router 之前，否则获取不了 post 请求携带的数据
+koa-body 中间件的引入顺序必须在 router 之前，否则获取不了 post 请求携带的数据
 :::
