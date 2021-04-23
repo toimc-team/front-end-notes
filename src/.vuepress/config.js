@@ -275,7 +275,7 @@ const sidebar = {
   ],
   '/course/': [
     {
-      title: 'vuepress使用规范',
+      title: 'vuepress使用说明',
       collapsable: false,
       children: genSidebarConfig('course/vuepress', siderBarOptions)
     },
