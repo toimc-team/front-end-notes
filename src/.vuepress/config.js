@@ -259,6 +259,11 @@ const nav = [
 ]
 
 const sidebar = {
+  '/basic/':[{
+    title: 'Koa',
+    collapsable: false,
+    children: genSidebarConfig('basic/node', siderBarOptions)
+  }],
   '/project/': [
     {
       title: '小程序',
