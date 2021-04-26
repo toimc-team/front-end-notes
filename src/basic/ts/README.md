@@ -201,7 +201,7 @@ const Cellphone: ClockStatic = class Cellphone implements ClockInterface, GameIn
 
 ### 泛型和接口
 
-#### 从 `react` 定义文件学习 泛型和接口
+**从 `React` 定义文件学习 泛型和接口**
 
 安装 `@types/react` 
 
@@ -245,7 +245,7 @@ const Test: FunctionComponent<TestProps> = (props) => {
 }
 ```
 
-#### 从 `react` `ts` 定义文件源码得知
+**从 `React` `ts` 定义文件源码得知**
 
 - 泛型的默认值 `<P = {}>` 
 
@@ -282,14 +282,14 @@ const Test: FunctionComponent<TestProps> = (props) => {
 - 联合类型 '|'
 
   ::: tip 提示
-  在`typescript` 不确定传入的类型是联合类型中的哪种时，我们只能访问两种类型共有的属性和方法。怎样判断是联合类型中的哪种类型，请看后面的 “类型断言”
+  在 `TypeScript` 不确定传入的类型是联合类型中的哪种时，我们只能访问两种类型共有的属性和方法。怎样判断是联合类型中的哪种类型，请看后面的 “类型断言”
   :::
 
   ```typescript
   let numberOrString: number | string // numberOrString 为 number 或 string 类型
   ```
 
-- `Partial` 功能，接受一个泛型， 将其中的属性或函数变为可选。是 `typescript` 内置类型
+- `Partial` 功能，接受一个泛型， 将其中的属性或函数变为可选。是 `TypeScript` 内置类型
 
   ```typescript
   interface Person {
@@ -495,11 +495,11 @@ node_modules
 - interface
 - class
 - 泛型
-  - `react` `FunctionComponent` 源码
+  - `React` `FunctionComponent` 定义文件源码
     - 类型别名
     - 联合类型
     - 交叉类型
-    - partial
+    - Partial
       - keyof, in
       - 常量类型
     - extends
@@ -507,7 +507,7 @@ node_modules
 - 编写声明文件
 
 ::: tip 提示
-`typescript` 内置类型, 如 `promise` `partial` ...
+`TypeScript` 内置类型, 如 `Promise` `Partial` ...
 :::
 
 ## 学习方法
