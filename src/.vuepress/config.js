@@ -298,7 +298,7 @@ const nav = [
 const sidebar = {
   '/basic/': [
     {
-      title: 'Koa',
+      title: 'Node.js进阶',
       collapsable: false,
       children: genSidebarConfig('basic/node', siderBarOptions)
     },
@@ -374,10 +374,6 @@ const sidebar = {
   ]
 }
 
-console.log(
-  '🚀 ~ file: config.js ~ line 365 ~ exports',
-  genSidebarConfig('about', { ...siderBarOptions, hasSub: false })
-)
 module.exports = {
   configureWebpack: {
     resolve: {
