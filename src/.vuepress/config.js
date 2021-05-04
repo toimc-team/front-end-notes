@@ -1,7 +1,10 @@
 const { resolve, genSidebarConfig } = require('./utils/index')
 const { description } = require('../../package')
 
-const siderBarOptions = { hasSub: true, exclude: ['README.md', 'assets', '.DS_Store', 'docs', 'images'] }
+const siderBarOptions = {
+  hasSub: true,
+  exclude: ['README.md', 'assets', '.DS_Store', 'docs', 'images']
+}
 
 const nav = [
   {
@@ -293,11 +296,18 @@ const nav = [
 ]
 
 const sidebar = {
-  '/basic/':[{
-    title: 'Koa',
-    collapsable: false,
-    children: genSidebarConfig('basic/node', siderBarOptions)
-  }],
+  '/basic/': [
+    {
+      title: 'Node.js进阶',
+      collapsable: false,
+      children: genSidebarConfig('basic/node', siderBarOptions)
+    },
+    {
+      title: 'TypeScript',
+      collapsable: false,
+      children: genSidebarConfig('basic/ts', siderBarOptions)
+    }
+  ],
   '/project/': [
     {
       title: '社区PC',
@@ -332,9 +342,7 @@ const sidebar = {
     {
       title: 'React世界',
       collapsable: false,
-      children: [
-        'react/'
-      ]
+      children: ['react/']
     }
   ],
   '/course/': [
@@ -366,7 +374,6 @@ const sidebar = {
   ]
 }
 
-console.log('🚀 ~ file: config.js ~ line 365 ~ exports', genSidebarConfig('about', { ...siderBarOptions, hasSub: false }))
 module.exports = {
   configureWebpack: {
     resolve: {
