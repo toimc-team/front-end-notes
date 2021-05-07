@@ -13,7 +13,6 @@ exports.genSidebarConfig = (dir, { hasSub, exclude }) => {
   })
   // console.log('🚀 ~ file: config.js ~ line 26 ~ genSidebarConfig ~ subDir', subDir)
   subDir ? arr.unshift(subDir + '/') : arr.unshift('')
-  console.log('arr:', arr);
   return arr
 }
 

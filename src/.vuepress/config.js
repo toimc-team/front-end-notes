@@ -306,6 +306,11 @@ const sidebar = {
       title: 'TypeScript',
       collapsable: false,
       children: genSidebarConfig('basic/ts', siderBarOptions)
+    },
+    {
+      title: 'mongoDB',
+      collapsable: false,
+      children: genSidebarConfig('basic/mongo', siderBarOptions)
     }
   ],
   '/project/': [
