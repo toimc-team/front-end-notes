@@ -355,6 +355,11 @@ const sidebar = {
       title: '项目说明',
       collapsable: false,
       children: genSidebarConfig('course/vuepress', siderBarOptions)
+    },
+    {
+      title: 'Pull Request教程',
+      collapsable: false,
+      children: genSidebarConfig('course/pull-request', siderBarOptions)
     }
   ],
   '/about/': [
