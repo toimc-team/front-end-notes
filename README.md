@@ -156,7 +156,7 @@ $ npm run dev
 
 如果你想进一步了解我们，欢迎关注我们的公众号和抖音号
 
-<img src="./src/about/assets/image-20210525181232836.png" alt="image-20210525181232836" style="width:25%;height:25%;" /><img src="./src/about/assets/image-20210525181759916.png" alt="image-20210525181759916" style="width: 25%;height: 25%;" />
+<img src="./src/about/assets/image-20210525181232836.png" alt="image-20210525181232836"  width="28%" height="28%" /><img src="./src/about/assets/image-20210525181759916.png" alt="image-20210525181759916"  width="27%" height="27%" />
 
 ## 开源协议
 
