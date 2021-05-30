@@ -2,23 +2,19 @@
 sidebarDepth: 2
 ---
 
-<!-- sidebarDepth: 2 -->
-
 # 认识 MongoDB
 
-## 初识 MongoDB？
+## 基本概念
 
 ### 什么是 MongoDB
 
-一个以 json 为数据模型的文档数据库
+一个以 json 为数据模型的文档数据库；文档来自于 "JSON Document"，并非我们理解的 PDF、word 文档；类似于 Oracle、MySQL 海量数据处理，数据平台
 
-### 为什么叫文档数据库
+### MongoDB 是免费的吗？
 
-文档来自于 "JSON Document"，并非我们理解的 PDF、word 文档
-
-### 主要用途
-
-应用数据库，类似于 Oracle、MySQL 海量数据处理，数据平台
+- MongoDB 有两个发布版本：社区版和企业版
+- 社区办基于 SSPL，一种和 AGPL 基本类似的开源协议
+- 企业版是基于商业协议，需要付费使用
 
 ### 主要特点
 
@@ -33,19 +29,21 @@ sidebarDepth: 2
   - I(Isolation)： 独立性，也叫隔离性
   - D(Durability)：持久性
 
-## MongoDB 是免费的吗？
+### MongoDB 与关系型数据库
 
-- MongoDB 有两个发布版本：社区版和企业版
-- 社区办基于 SSPL，一种和 AGPL 基本类似的开源协议
-- 企业版是基于商业协议，需要付费使用
-
-## MongoDB 与关系型数据库
-
-![image.png](./assets/1616208952573-8ffd239b-c069-4649-bbd1-06111aa15486.png)
+|                  | MongoDB                                                    | RDBMS                  |
+| ---------------- | ---------------------------------------------------------- | ---------------------- |
+| **_数据模型_**   | 文档模型                                                   | 关系模型               |
+| **_数据库类型_** | OLTP                                                       | OLTP                   |
+| **_CRUD 操作_**  | MQL/SQL                                                    | SQL                    |
+| **_高可用_**     | 复制集                                                     | 集群模式               |
+| **_横向扩展_**   | 通过原生分片完善支持                                       | 数据分区或者应用侵入式 |
+| **_索引支持_**   | B-树、全文索引、地理位置索引、多键(multikey)索引、TTL 索引 | B 树                   |
+| **_开发难度_**   | 容易                                                       | 困难                   |
+| **_数据容量_**   | 理论上没有上限                                             | 千万、亿               |
+| **_扩展方式_**   | 垂直扩展 + 水平扩展                                        | 垂直扩展               |
 
 ## MongoDB 的优势及特点
-
-### 优势
 
 - 面向开发者的医用 + 高效数据库
 
@@ -88,11 +86,11 @@ sidebarDepth: 2
 
 ## 安装 MongoDB [官网](https://www.mongodb.com/try)
 
-### docker 安装
+<!-- ### docker 安装 -->
 
 - 打开[docker hub 官网](https://hub.docker.com/_/mongo)搜 mongodb
 
-使用 dockerfile 的模式安装 mongo
+### 使用 dockerfile 模式安装 mongo
 
 ```yaml
 version: '3.1'
@@ -123,13 +121,19 @@ $ vim docker-compose.yml
 
 ![image.png](./assets/1616397704226-26e3dc2e-adf1-400e-98c7-2b681391e7e0.png)
 
+### 启动mongo服务
+
 现在就可以使用`docker-compose up -d`来启动 mongo 服务了，执行命令后 docker 就去拉去 mongo 镜像并创建 mongo 数据
 
 ![image.png](./assets/1616398007645-53cbec32-9f5e-42de-8939-fe7f179c7a70.png)
 
+### 查看运行进程
+
 可以使用`docker ps -a`或者`docker-compose`查看现在已启动的 docker 镜像
 
 ![image.png](./assets/1616398249417-7ab747c1-d8a9-4f65-b928-2f05cffc91a4.png)
+
+### 配置开放端口
 
 连接前一定要检查宿主机端口是否开放，centOS 可以使用`firewall-cmd --add-port=27017/tcp --permanent`命令添加端口，添加完成后，重启安全组，命令：`firewall-cmd --reload`
 
@@ -155,7 +159,7 @@ $ yum install firewalld
 
 ## 创建用户并分配权限 [参考官方文档](https://docs.mongodb.com/manual/core/authentication/)
 
-### docker 中连接 mongo，docker 交互式终端命令
+### docker 交互式终端命令
 
 ```shell
 $ docker exec -it <容器名称> 镜像名称
@@ -168,6 +172,7 @@ $ docker ps | grep mongo
 ```
 
 ![image.png](./assets/1616401184064-f5ebd1e3-311c-41ab-a899-e013ee1f415e.png)
+### docker 中连接 mongo
 
 - 连接示例
 
@@ -222,7 +227,7 @@ $ mongod <保存数据的文件夹路径> --port 27017
 ### 查看已有的数据库
 
 ```shell
-show dbs
+$ show dbs
 ```
 
 ![image.png](./assets/1616219506066-751483e7-c7db-4e6e-a0cc-24d524ec707c.png)
@@ -230,7 +235,7 @@ show dbs
 ### 查看当前数据库
 
 ```shell
-db
+$ db
 ```
 
 ![image.png](./assets/1616219935649-a2fc8043-060c-4fa6-bc11-3cebae56e0d8.png)
@@ -238,8 +243,8 @@ db
 ### 创建数据库或者切换数据库
 
 ```shell
-// 如果有这个数据库的话就是切换，没有的话就是创建
-use <数据库名>
+// 如果有这个数据库的话就是切换，没有的话就是创建并切换
+$ use <数据库名>
 ```
 
 ![image.png](./assets/1616219430156-ce874a39-bac3-46c2-96be-18efb6eb9453.png)
@@ -247,21 +252,21 @@ use <数据库名>
 ### 查看当前数据库已有文档（表）
 
 ```shell
-show collections
+$ show collections
 ```
 
 ![image.png](./assets/1616224816561-7e313bb6-73a2-449f-bd5f-d00325b9bf00.png)
 
 ### 添加数据
 
-语法：
+**_语法_**：
 
 ```shell
 // 添加单条数据
-db.<collection>.insertOne(<JSON>)
+$ db.<collection>.insertOne(<JSON>)
 
 // 添加多条数据
-db.<collection>.insertMany([<JSON 1>, <JSON 2>, ..., <JSON n>])
+$ db.<collection>.insertMany([<JSON 1>, <JSON 2>, ..., <JSON n>])
 ```
 
 - 添加一条数据
@@ -280,7 +285,7 @@ db.<collection>.insertMany([<JSON 1>, <JSON 2>, ..., <JSON n>])
 - 查询指定文档模型中的全部数据
 
   ```shell
-  db.<文档模型的名称>.find()
+  $ db.<文档模型的名称>.find()
   ```
 
   ![image.png](./assets/1616220403969-bc2640de-55d2-464c-96d0-684d7a3e1925.png)
@@ -578,14 +583,14 @@ db.<COLLECTION>.aggregate(pipeline, { options })
 
 ### 复制集的作用
 
-> - MongoDB 复制集的主要意义在于实现服务高可用
-> - 它的现实依赖于两个方面的功能
->   - 数据写入时将数据迅速复制到另一个独立节点上
->   - 在接受写入的节点发生故障是自动选举出一个新的替代节点
-> - 在实现高可用的同事，复制集实现了其他几个附加作用
->   - 数据分发：将数据从一个区域复制到另一个区域，减少另一个区域的读延迟
->   - 读写分离：不同类型的压力分别在不同的节点上执行
->   - 异地容灾：在数据中心发生故障的时候快速切换到异地
+ - MongoDB 复制集的主要意义在于实现服务高可用
+ - 它的现实依赖于两个方面的功能
+   - 数据写入时将数据迅速复制到另一个独立节点上
+   - 在接受写入的节点发生故障是自动选举出一个新的替代节点
+ - 在实现高可用的同事，复制集实现了其他几个附加作用
+   - 数据分发：将数据从一个区域复制到另一个区域，减少另一个区域的读延迟
+   - 读写分离：不同类型的压力分别在不同的节点上执行
+   - 异地容灾：在数据中心发生故障的时候快速切换到异地
 
 ### 典型复制集结构
 
