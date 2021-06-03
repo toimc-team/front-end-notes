@@ -229,7 +229,7 @@ const nav = [
     items: [
       {
         text: '大前端课程',
-        link: 'https://class.imooc.com/sale/webfullstack'
+        link: 'https://class.imooc.com/sale/webfullstack2021'
       },
       {
         text: '快速了解新版Vue3.0 + Vite开发',
