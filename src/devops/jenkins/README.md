@@ -5,7 +5,7 @@ sidebar: auto
 # Jenkins
 
 ## 什么是CI/CD
-`CI/CD`即持续集成(Continuous Integration)、持续交付(Continuous Delivery)和持续部署(Continuous Deployment)，是一种通过引入自动化构建部署来频繁想客户交付的方法。`CI/CD`是`DevOps`的基础核心，如果没有`CI/CD`自动化的工具和流程，`DevOps`是没有意义的，来看下图`DevOps`工作流程图：
+`CI/CD`即持续集成(Continuous Integration)、持续交付(Continuous Delivery)和持续部署(Continuous Deployment)，是一种通过引入自动化构建部署来频繁向客户交付的方法。`CI/CD`是`DevOps`的基础核心，如果没有`CI/CD`自动化的工具和流程，`DevOps`是没有意义的，来看下图`DevOps`工作流程图：
 
 ![](./assets/20210308203919800.png)
 
