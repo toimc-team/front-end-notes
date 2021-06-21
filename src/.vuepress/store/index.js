@@ -5,11 +5,24 @@ import { getRights } from '@/api/user'
 
 Vue.use(Vuex)
 
+const myStore =
+  typeof localStorage !== 'undefined'
+    ? localStorage
+    : (process.$local = {
+        setItem: (key, value) => {
+          process.$local[key] = value
+        },
+        getItem: key => process.$local[key]
+      })
+
 export default new Vuex.Store({
   state: {
-    token: localStorage.getItem('token') || '',
-    refreshToken: localStorage.getItem('refreshToken') || '',
-    userInfo: JSON.parse(localStorage.getItem('userInfo') || '{}'),
+    // token: '',
+    // refreshToken: '',
+    // userInfo: {},
+    token: myStore.getItem('token') || '',
+    refreshToken: myStore.getItem('refreshToken') || '',
+    userInfo: JSON.parse(myStore.getItem('userInfo') || '{}'),
     qrcodeShow: false,
     rights: {}
   },
@@ -19,18 +32,18 @@ export default new Vuex.Store({
     },
     setToken(state, value) {
       state.token = value
-      localStorage.setItem('token', value)
+      myStore.setItem('token', value)
     },
     setRefreshToken(state, value) {
       state.refreshToken = value
-      localStorage.setItem('refreshToken', value)
+      myStore.setItem('refreshToken', value)
     },
     // 设置用户的基本信息
     setUserInfo(state, value) {
       if (value === '') return
       state.userInfo = value
       // 本地存储用户的基本信
-      localStorage.setItem('userInfo', JSON.stringify(value))
+      myStore.setItem('userInfo', JSON.stringify(value))
     },
     setAllRights(state, value) {
       state.rights = value
