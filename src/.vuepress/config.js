@@ -443,8 +443,8 @@ module.exports = {
     'vuepress-plugin-smooth-scroll',
     require('./utils/plugins.js')
     // '@snowdog/vuepress-plugin-pdf-export'
-  ],
+  ]
 
-  wsUrl: isDev ? 'localhost' : 'mp.toimc.com',
-  wsPort: isDev ? 3001 : 443
+  // wsUrl: isDev ? 'localhost' : 'mp.toimc.com',
+  // wsPort: isDev ? 3001 : 443,
 }

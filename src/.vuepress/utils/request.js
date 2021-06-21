@@ -5,7 +5,7 @@ const isDev = process.env.NODE_ENV === 'development'
 // console.log('🚀 ~ file: request.js ~ line 5 ~ isDev', isDev)
 
 const axiosInstance = axios.create({
-  baseURL: isDev ? 'http://localhost:3000' : 'http://api.dev.toimc.com:22000',
+  baseURL: isDev ? 'http://localhost:3000' : 'https://mp.toimc.com',
   headers: {
     'Content-Type': 'application/json;charset=utf-8'
   },
