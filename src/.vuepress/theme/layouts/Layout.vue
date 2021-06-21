@@ -1,24 +1,10 @@
 <template>
-  <div
-    class="theme-container"
-    :class="pageClasses"
-    @touchstart="onTouchStart"
-    @touchend="onTouchEnd"
-  >
-    <Navbar
-      v-if="shouldShowNavbar"
-      @toggle-sidebar="toggleSidebar"
-    />
+  <div class="theme-container" :class="pageClasses" @touchstart="onTouchStart" @touchend="onTouchEnd">
+    <Navbar v-if="shouldShowNavbar" @toggle-sidebar="toggleSidebar" />
 
-    <div
-      class="sidebar-mask"
-      @click="toggleSidebar(false)"
-    />
+    <div class="sidebar-mask" @click="toggleSidebar(false)" />
 
-    <Sidebar
-      :items="sidebarItems"
-      @toggle-sidebar="toggleSidebar"
-    >
+    <Sidebar :items="sidebarItems" @toggle-sidebar="toggleSidebar">
       <template #top>
         <slot name="sidebar-top" />
       </template>
@@ -29,10 +15,7 @@
 
     <Home v-if="$page.frontmatter.home" />
 
-    <Page
-      v-else
-      :sidebar-items="sidebarItems"
-    >
+    <Page v-else :sidebar-items="sidebarItems">
       <template #top>
         <slot name="page-top" />
       </template>
@@ -40,6 +23,7 @@
         <slot name="page-bottom" />
       </template>
     </Page>
+    <AuthQrCode></AuthQrCode>
   </div>
 </template>
 

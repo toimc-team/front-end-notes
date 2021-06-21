@@ -1,6 +1,6 @@
 ---
 sidebar: auto
-sidebarDepth: 2
+auth: true
 ---
 
 # 更新记录
@@ -22,6 +22,8 @@ sidebarDepth: 2
 4. A 添加
 5. U 更新贡献说明
 
+::: slot auth
+
 2021-04-18
 1. A 添加分类目录（项目、DevOps、基础强化）
 
@@ -34,3 +36,5 @@ sidebarDepth: 2
 
 1. A 添加vuepress菜单
 2. A 添加vuepress项目配置（返回顶部、图片缩放功能）
+
+:::

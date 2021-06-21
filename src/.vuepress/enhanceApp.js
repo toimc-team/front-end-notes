@@ -4,6 +4,8 @@
  * https://v1.vuepress.vuejs.org/guide/basic-config.html#app-level-enhancements
  */
 
+import store from './store'
+
 export default ({
   Vue, // VuePress 正在使用的 Vue 构造函数
   options, // 附加到根实例的一些选项
@@ -11,5 +13,16 @@ export default ({
   siteData, // 站点元数据
   isServer // 当前应用配置是处于 服务端渲染 或 客户端
 }) => {
+  Vue.mixin({ store })
+
   // ...apply enhancements for the site.
+  // router.beforeEach((to, from, next) => {
+  //   // to and from are Route Object,next() must be called to resolve the hook}
+  //   console.log(to)
+  //   console.log(from)
+  //   next()
+  // })
+
+  // console.log(options)
+  // console.log(siteData)
 }

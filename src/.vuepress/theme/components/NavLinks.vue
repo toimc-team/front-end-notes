@@ -7,10 +7,18 @@
     </div>
 
     <!-- repo link -->
-    <a v-if="repoLink" :href="repoLink" class="repo-link" target="_blank" rel="noopener noreferrer">
+    <a
+      v-if="repoLink"
+      :href="repoLink"
+      class="repo-link"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       {{ repoLabel }}
       <OutboundLink />
     </a>
+    <LoginButton v-if="!isLogin"></LoginButton>
+    <div class="nav-item" v-else @click="quit()">{{ userInfo.name }}</div>
   </nav>
 </template>
 
@@ -18,6 +26,7 @@
 import DropdownLink from '@theme/components/DropdownLink.vue'
 import { resolveNavLinkItem } from '../util'
 import NavLink from '@theme/components/NavLink.vue'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'NavLinks',
@@ -28,11 +37,13 @@ export default {
   },
 
   computed: {
-    userNav () {
+    ...mapState(['userInfo']),
+    ...mapGetters(['isLogin']),
+    userNav() {
       return this.$themeLocaleConfig.nav || this.$site.themeConfig.nav || []
     },
 
-    nav () {
+    nav() {
       const { locales } = this.$site
       if (locales && Object.keys(locales).length > 1) {
         const currentLink = this.$page.path
@@ -44,7 +55,8 @@ export default {
           items: Object.keys(locales).map(path => {
             const locale = locales[path]
             // eslint-disable-next-line no-mixed-operators
-            const text = themeLocales[path] && themeLocales[path].label || locale.lang
+            const text =
+              (themeLocales[path] && themeLocales[path].label) || locale.lang
             let link
             // Stay on the current page
             if (locale.lang === this.$lang) {
@@ -65,7 +77,7 @@ export default {
       return this.userNav
     },
 
-    userLinks () {
+    userLinks() {
       return (this.nav || []).map(link => {
         return Object.assign(resolveNavLinkItem(link), {
           items: (link.items || []).map(resolveNavLinkItem)
@@ -73,17 +85,15 @@ export default {
       })
     },
 
-    repoLink () {
+    repoLink() {
       const { repo } = this.$site.themeConfig
       if (repo) {
-        return /^https?:/.test(repo)
-          ? repo
-          : `https://github.com/${repo}`
+        return /^https?:/.test(repo) ? repo : `https://github.com/${repo}`
       }
       return null
     },
 
-    repoLabel () {
+    repoLabel() {
       if (!this.repoLink) return
       if (this.$site.themeConfig.repoLabel) {
         return this.$site.themeConfig.repoLabel
@@ -99,6 +109,15 @@ export default {
       }
 
       return 'Source'
+    }
+  },
+  methods: {
+    quit() {
+      const result = confirm('您已登录，需要退出吗')
+      if (result) {
+        this.$store.commit('setUserInfo', {})
+        localStorage.clear()
+      }
     }
   }
 }

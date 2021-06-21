@@ -384,6 +384,8 @@ const sidebar = {
   ]
 }
 
+const isDev = process.env.NODE_ENV === 'development'
+
 module.exports = {
   configureWebpack: {
     resolve: {
@@ -392,7 +394,7 @@ module.exports = {
       }
     }
   },
-  base: process.env.NODE_ENV === 'development' ? '/' : '/notes-page/',
+  base: isDev ? '/' : '/notes-page/',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
@@ -437,7 +439,12 @@ module.exports = {
   plugins: [
     '@vuepress/plugin-back-to-top',
     '@vuepress/plugin-medium-zoom',
-    '@vuepress/nprogress'
+    '@vuepress/nprogress',
+    'vuepress-plugin-smooth-scroll',
+    require('./utils/plugins.js')
     // '@snowdog/vuepress-plugin-pdf-export'
-  ]
+  ],
+
+  wsUrl: isDev ? 'localhost' : 'mp.toimc.com',
+  wsPort: isDev ? 3001 : 443
 }

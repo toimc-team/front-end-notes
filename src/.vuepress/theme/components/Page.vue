@@ -3,29 +3,74 @@
     <slot name="top" />
 
     <Content class="theme-default-content" />
+    <Content class="theme-custom-content" slot-key="auth" v-if="isAuth" />
+    <NoAuth v-else-if="!isAuth && needCheck" @click="check(true)"></NoAuth>
     <PageEdit />
 
     <PageNav v-bind="{ sidebarItems }" />
 
     <slot name="bottom" />
+    <MessageBox
+      :show.sync="show"
+      :submit="submit"
+      :msg="'您还未登录！点击确定扫一扫登录'"
+    ></MessageBox>
   </main>
 </template>
 
 <script>
 import PageEdit from '@theme/components/PageEdit.vue'
 import PageNav from '@theme/components/PageNav.vue'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   components: { PageEdit, PageNav },
-  props: ['sidebarItems']
+  props: ['sidebarItems'],
+  data: () => ({
+    isAuth: false,
+    needCheck: false,
+    show: false
+  }),
+  mounted() {
+    this.check()
+  },
+  computed: {
+    ...mapState(['token'])
+  },
+  methods: {
+    ...mapActions(['getAuth']),
+    submit() {
+      this.$store.commit('setCodeShow', true)
+    },
+    async check(flag = false) {
+      const { path, frontmatter } = this.$page
+      const { auth } = frontmatter
+      console.log('🚀 ~ file: Page.vue ~ line 36 ~ check ~ auth', auth)
+      this.needCheck = auth || false
+      try {
+        const result = await this.getAuth({ path, frontmatter })
+        if (result && result.code === 200) {
+          this.isAuth = result.data.all
+        }
+        console.log('🚀 ~ file: Page.vue ~ line 39 ~ check ~ result', result)
+      } catch (error) {
+        if (flag) {
+          this.show = true
+        }
+      }
+      // if (code === 200) {
+      //   this.isAuth = true
+      // }
+    }
+  }
 }
 </script>
 
 <style lang="stylus">
-@require '../styles/wrapper.styl'
+@require '../styles/wrapper.styl';
 
-.page
-  padding-bottom 2rem
-  display block
-
+.page {
+  padding-bottom: 2rem;
+  display: block;
+}
 </style>
