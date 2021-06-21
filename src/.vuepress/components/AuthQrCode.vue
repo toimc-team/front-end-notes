@@ -116,7 +116,7 @@ export default {
 }
 
 .wrapper {
-  position: absolute;
+  position: fixed;
   background: #fff;
   min-width: 350px;
   min-height: 300px;
