@@ -1,8 +1,11 @@
 import axios from 'axios'
 import store from '@/store'
 
+const isDev = process.env.NODE_ENV === 'development'
+// console.log('🚀 ~ file: request.js ~ line 5 ~ isDev', isDev)
+
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: isDev ? 'http://localhost:3000' : 'http://api.dev.toimc.com:22000',
   headers: {
     'Content-Type': 'application/json;charset=utf-8'
   },
