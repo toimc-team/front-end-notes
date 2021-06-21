@@ -37,6 +37,13 @@ export default {
   computed: {
     ...mapState(['token'])
   },
+  watch: {
+    token(newval) {
+      if (!newval) {
+        this.isAuth = false
+      }
+    }
+  },
   methods: {
     ...mapActions(['getAuth']),
     submit() {
@@ -45,14 +52,16 @@ export default {
     async check(flag = false) {
       const { path, frontmatter } = this.$page
       const { auth } = frontmatter
-      console.log('🚀 ~ file: Page.vue ~ line 36 ~ check ~ auth', auth)
+      // console.log('🚀 ~ file: Page.vue ~ line 36 ~ check ~ auth', auth)
       this.needCheck = auth || false
       try {
         const result = await this.getAuth({ path, frontmatter })
         if (result && result.code === 200) {
           this.isAuth = result.data.all
+        } else {
+          this.isAuth = false
         }
-        console.log('🚀 ~ file: Page.vue ~ line 39 ~ check ~ result', result)
+        // console.log('🚀 ~ file: Page.vue ~ line 39 ~ check ~ result', result)
       } catch (error) {
         if (flag) {
           // this.show = true

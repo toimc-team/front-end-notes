@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { getRights } from '@/api/user'
+// import createLogger from 'vuex/dist/logger'
 // import WebSocketClient from '@/utils/wsUtils'
 
 Vue.use(Vuex)
 
-const myStore =
-  typeof localStorage !== 'undefined'
-    ? localStorage
+export const myStore =
+  typeof sessionStorage !== 'undefined'
+    ? sessionStorage
     : (process.$local = {
         setItem: (key, value) => {
           process.$local[key] = value
@@ -61,5 +62,7 @@ export default new Vuex.Store({
       commit('setAllRights', result)
       return result
     }
-  }
+  },
+  plugins: []
+  // plugins: [createLogger()]
 })

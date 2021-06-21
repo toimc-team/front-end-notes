@@ -40,6 +40,7 @@ import Navbar from '@theme/components/Navbar.vue'
 import Page from '@theme/components/Page.vue'
 import Sidebar from '@theme/components/Sidebar.vue'
 import { resolveSidebarItems } from '../util'
+import { myStore } from '@/store'
 
 export default {
   name: 'Layout',
@@ -108,6 +109,10 @@ export default {
     this.$router.afterEach(() => {
       this.isSidebarOpen = false
     })
+    const userInfoStr = myStore.getItem('userInfo')
+    if (userInfoStr) {
+      this.$store.commit('setUserInfo', JSON.parse(userInfoStr))
+    }
   },
 
   methods: {

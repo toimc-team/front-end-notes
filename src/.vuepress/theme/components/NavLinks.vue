@@ -1,32 +1,40 @@
 <template>
-  <nav v-if="userLinks.length || repoLink" class="nav-links">
-    <!-- user links -->
-    <div v-for="item in userLinks" :key="item.link" class="nav-item">
-      <DropdownLink v-if="item.type === 'links'" :item="item" />
-      <NavLink v-else :item="item" />
-    </div>
+  <ClientOnly>
+    <nav v-if="userLinks.length || repoLink" class="nav-links">
+      <!-- user links -->
+      <div v-for="item in userLinks" :key="item.link" class="nav-item">
+        <DropdownLink v-if="item.type === 'links'" :item="item" />
+        <NavLink v-else :item="item" />
+      </div>
 
-    <!-- repo link -->
-    <a
-      v-if="repoLink"
-      :href="repoLink"
-      class="repo-link"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {{ repoLabel }}
-      <OutboundLink />
-    </a>
-    <LoginButton v-if="!isLogin"></LoginButton>
-    <div class="nav-item" v-else @click="quit()">{{ userInfo.name }}</div>
-  </nav>
+      <!-- repo link -->
+      <a
+        v-if="repoLink"
+        :href="repoLink"
+        class="repo-link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {{ repoLabel }}
+        <OutboundLink />
+      </a>
+      <div class="nav-item" v-if="isLogin" @click="quit()">
+        {{ userInfo.name }}
+      </div>
+      <div class="nav-item" v-else>
+        <div class="btn" @click="$store.commit('setCodeShow', true)">
+          快速登录
+        </div>
+      </div>
+    </nav>
+  </ClientOnly>
 </template>
 
 <script>
 import DropdownLink from '@theme/components/DropdownLink.vue'
 import { resolveNavLinkItem } from '../util'
 import NavLink from '@theme/components/NavLink.vue'
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'NavLinks',
@@ -34,6 +42,10 @@ export default {
   components: {
     NavLink,
     DropdownLink
+  },
+  mounted() {
+    window.vue = this
+    console.log(this.isLogin)
   },
 
   computed: {
@@ -112,12 +124,17 @@ export default {
     }
   },
   methods: {
-    quit() {
-      const result = confirm('您已登录，需要退出吗')
-      if (result) {
-        this.$store.commit('setUserInfo', {})
-        localStorage.clear()
-      }
+    ...mapMutations(['setToken', 'setRefreshToken', 'setUserInfo']),
+    async quit() {
+      try {
+        const result = await this.$confirm('您已登录，需要退出吗')
+        if (result) {
+          this.setUserInfo({})
+          this.setToken('')
+          this.setRefreshToken('')
+          sessionStorage.clear()
+        }
+      } catch (error) {}
     }
   }
 }
@@ -173,5 +190,17 @@ export default {
       border-bottom: 2px solid lighten($accentColor, 8%);
     }
   }
+}
+
+.btn {
+  height: 35px;
+  line-height: 38px;
+  font-size: 14px;
+  padding: 0 10px;
+  background-image: linear-gradient(0deg, #f5f5f5, #fff);
+  border: 1px solid #d9d9d9;
+  user-select: none;
+  touch-action: manipulation;
+  border-radius: 4px;
 }
 </style>
