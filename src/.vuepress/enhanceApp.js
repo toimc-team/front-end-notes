@@ -5,6 +5,9 @@
  */
 
 import store from './store'
+import Element from 'element-ui'
+// import 'element-ui/lib/theme-chalk/index.css'
+import './styles/theme/index.css'
 
 export default ({
   Vue, // VuePress 正在使用的 Vue 构造函数
@@ -14,15 +17,5 @@ export default ({
   isServer // 当前应用配置是处于 服务端渲染 或 客户端
 }) => {
   Vue.mixin({ store })
-
-  // ...apply enhancements for the site.
-  // router.beforeEach((to, from, next) => {
-  //   // to and from are Route Object,next() must be called to resolve the hook}
-  //   console.log(to)
-  //   console.log(from)
-  //   next()
-  // })
-
-  // console.log(options)
-  // console.log(siteData)
+  Vue.use(Element)
 }

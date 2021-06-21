@@ -10,11 +10,11 @@
     <PageNav v-bind="{ sidebarItems }" />
 
     <slot name="bottom" />
-    <MessageBox
+    <!-- <MessageBox
       :show.sync="show"
       :submit="submit"
       :msg="'您还未登录！点击确定扫一扫登录'"
-    ></MessageBox>
+    ></MessageBox> -->
   </main>
 </template>
 
@@ -55,7 +55,18 @@ export default {
         console.log('🚀 ~ file: Page.vue ~ line 39 ~ check ~ result', result)
       } catch (error) {
         if (flag) {
-          this.show = true
+          // this.show = true
+          // this.$alert('')
+          this.$confirm('您没有访问权限，请登录', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          })
+            .then(() => {
+              // this.show = true
+              this.$store.commit('setCodeShow', true)
+            })
+            .catch(() => {})
         }
       }
       // if (code === 200) {

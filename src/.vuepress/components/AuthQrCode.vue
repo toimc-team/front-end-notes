@@ -48,8 +48,8 @@ export default {
   },
   methods: {
     async getImg() {
+      clearInterval(this.ctrl)
       const local = localStorage.getItem('scene')
-      console.log('🚀 ~ file: AuthQrCode.vue ~ line 53 ~ getImg ~ local', local)
       if (!local) {
         this.scene = nanoid()
         localStorage.setItem('scene', this.scene)
@@ -60,10 +60,6 @@ export default {
       const result = await getQrCode({
         scene: this.scene
       })
-      console.log(
-        '🚀 ~ file: AuthQrCode.vue ~ line 63 ~ getImg ~ result',
-        result
-      )
       const bytes = new Uint8Array(result)
       let storeData = ''
       const len = bytes.byteLength

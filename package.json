@@ -36,8 +36,10 @@
     "vuepress-plugin-smooth-scroll": "0.0.10"
   },
   "dependencies": {
+    "async-validator": "^1.11.5",
     "axios": "^0.21.1",
     "dayjs": "^1.10.5",
+    "element-ui": "^2.15.2",
     "nanoid": "^3.1.23",
     "vuex": "^3.6.2"
   }
