@@ -105,5 +105,3 @@ dist
 .DS_Store
 
 upload.js
-
-*-lock.json
