@@ -7,3 +7,5 @@ export const getQrCode = params =>
 
 export const getUserByScene = params =>
   axios.get('/public/getScene', { params })
+
+export const checkCoupon = params => axios.post('/coupon/check', params)
