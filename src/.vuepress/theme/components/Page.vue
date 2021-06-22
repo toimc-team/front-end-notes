@@ -15,7 +15,7 @@
       :submit="submit"
       :msg="'您还未登录！点击确定扫一扫登录'"
     ></MessageBox> -->
-    <el-dialog :visible.sync="dialogVisible" width="420px" :modal="false">
+    <el-dialog :visible.sync="dialogVisible" width="420px">
       <el-form :model="form" :rules="rules" ref="ruleForm" label-width="60px">
         <el-form-item label="兑换码" prop="coupon">
           <el-input
@@ -108,18 +108,23 @@ export default {
         }
       })
     },
-    confirmLogin(msg, cb = this.$store.commit('setCodeShow', true)) {
+    confirmLogin(msg, cb) {
       this.$confirm(msg, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
-        .then(cb)
+        .then(() => {
+          cb && cb()
+        })
         .catch(() => {})
     },
     async check(flag = false) {
-      if (!this.token) {
-        return this.confirmLogin('您没有访问权限，请登录')
+      if (flag && !this.token) {
+        this.confirmLogin('您没有访问权限，请登录', () => {
+          this.$store.commit('setCodeShow', true)
+        })
+        return
       }
 
       const { path, frontmatter } = this.$page
@@ -139,7 +144,10 @@ export default {
         }
         // console.log('🚀 ~ file: Page.vue ~ line 39 ~ check ~ result', result)
       } catch (error) {
-        flag && this.confirmLogin('您没有访问权限，请登录')
+        flag &&
+          this.confirmLogin('您没有访问权限，请登录', () => {
+            this.$store.commit('setCodeShow', true)
+          })
       }
       // if (code === 200) {
       //   this.isAuth = true
