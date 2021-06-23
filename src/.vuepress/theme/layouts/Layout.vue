@@ -41,6 +41,8 @@ import Page from '@theme/components/Page.vue'
 import Sidebar from '@theme/components/Sidebar.vue'
 import { resolveSidebarItems } from '../util'
 import { myStore } from '@/store'
+// import { getUserBasic } from '@/api/user'
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'Layout',
@@ -105,17 +107,31 @@ export default {
     }
   },
 
-  mounted() {
+  async mounted() {
     this.$router.afterEach(() => {
       this.isSidebarOpen = false
     })
     const userInfoStr = myStore.getItem('userInfo')
     if (userInfoStr) {
-      this.$store.commit('setUserInfo', JSON.parse(userInfoStr))
+      this.setUserInfo(JSON.parse(userInfoStr))
     }
+    const { token, refreshToken } = this.$route.query
+    token && this.setToken(token)
+    refreshToken && this.setRefreshToken(refreshToken)
+    await this.getUserInfo()
+    // if (token && JSON.stringify(this.$store.state.userInfo) !== '{}') {
+    // 拉取最新的用户信息
+    // if (token) {
+    //   const { code, data } = awai  t getUserBasic()
+    //   if (code === 200) {
+    //     this.setUserInfo(data)
+    //   }
+    // }
   },
 
   methods: {
+    ...mapMutations(['setToken', 'setRefreshToken', 'setUserInfo']),
+    ...mapActions(['getUserInfo']),
     toggleSidebar(to) {
       this.isSidebarOpen = typeof to === 'boolean' ? to : !this.isSidebarOpen
       this.$emit('toggle-sidebar', this.isSidebarOpen)

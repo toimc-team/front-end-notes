@@ -67,16 +67,10 @@ export default {
         storeData += String.fromCharCode(bytes[i])
       }
       // const blob = new Blob([result], { type: 'image/png' })
-      // console.log('🚀 ~ file: AuthQrCode.vue ~ line 70 ~ getImg ~ blob', blob)
       // const imageUrl = (window.URL || window.webkitURL).createObjectURL(blob)
-      // console.log('🚀 ~ file: AuthQrCode.vue ~ line 56 ~ getImg ~ imageUrl', imageUrl)
       this.src = 'data:image/png;base64,' + window.btoa(storeData)
       this.date = new Date()
       this.checkLogin()
-      // console.log(
-      //   '🚀 ~ file: AuthQrCode.vue ~ line 38 ~ getImg ~ result',
-      //   result
-      // )
     },
     checkLogin() {
       this.ctrl = setInterval(async () => {

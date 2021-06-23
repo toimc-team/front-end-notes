@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getRights } from '@/api/user'
+import { getRights, getUserBasic } from '@/api/user'
 // import createLogger from 'vuex/dist/logger'
 // import WebSocketClient from '@/utils/wsUtils'
 
@@ -55,10 +55,17 @@ export default new Vuex.Store({
       state.userInfo && typeof state.userInfo.name !== 'undefined'
   },
   actions: {
+    async getUserInfo({ commit, state }) {
+      if (state.token) {
+        const { code, data } = await getUserBasic()
+        if (code === 200) {
+          commit('setUserInfo', data)
+        }
+      }
+    },
     async getAuth({ commit }, payload) {
-      console.log(payload)
+      // console.log(payload)
       const result = await getRights(payload)
-      console.log('🚀 ~ file: index.js ~ line 31 ~ getAuth ~ result', result)
       commit('setAllRights', result)
       return result
     }

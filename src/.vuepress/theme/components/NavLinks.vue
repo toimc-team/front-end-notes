@@ -22,7 +22,7 @@
         {{ userInfo.name }}
       </div>
       <div class="nav-item" v-else>
-        <div class="btn" @click="$store.commit('setCodeShow', true)">
+        <div class="btn login" @click="$store.commit('setCodeShow', true)">
           快速登录
         </div>
       </div>
@@ -43,10 +43,7 @@ export default {
     NavLink,
     DropdownLink
   },
-  mounted() {
-    window.vue = this
-    console.log(this.isLogin)
-  },
+  mounted() {},
 
   computed: {
     ...mapState(['userInfo']),
@@ -202,5 +199,9 @@ export default {
   user-select: none;
   touch-action: manipulation;
   border-radius: 4px;
+
+  &.login {
+    max-width: 56px;
+  }
 }
 </style>

@@ -129,7 +129,6 @@ export default {
 
       const { path, frontmatter } = this.$page
       const { auth } = frontmatter
-      // console.log('🚀 ~ file: Page.vue ~ line 36 ~ check ~ auth', auth)
       this.needCheck = auth || false
       try {
         const { code, data } = await this.getAuth({ path, frontmatter })
@@ -142,7 +141,6 @@ export default {
               this.dialogVisible = true
             })
         }
-        // console.log('🚀 ~ file: Page.vue ~ line 39 ~ check ~ result', result)
       } catch (error) {
         flag &&
           this.confirmLogin('您没有访问权限，请登录', () => {
@@ -172,5 +170,13 @@ export default {
 .fmt {
   color: #999;
   font-size: 13px;
+}
+
+@media screen and (max-width: 800px) {
+  .el-message-box__wrapper {
+    .el-message-box {
+      width: 80%;
+    }
+  }
 }
 </style>
