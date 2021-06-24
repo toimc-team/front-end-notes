@@ -201,7 +201,8 @@ export default {
   border-radius: 4px;
 
   &.login {
-    max-width: 56px;
+    width: 65px;
+    text-align: center;
   }
 }
 </style>
