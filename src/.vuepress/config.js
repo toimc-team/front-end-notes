@@ -225,25 +225,25 @@ const nav = [
     ]
   },
   {
-    text: '课程',
-    items: [
-      {
-        text: '大前端课程',
-        link: 'https://class.imooc.com/sale/webfullstack2021'
-      },
-      {
-        text: '快速了解新版Vue3.0 + Vite开发',
-        link: 'https://www.imooc.com/learn/1245'
-      },
-      {
-        text: '3小时速成 Vue2.x 核心技术',
-        link: 'https://www.imooc.com/learn/1091'
-      }
-    ]
-  },
-  {
     text: '关于',
     items: [
+      {
+        text: '线上课程',
+        items: [
+          {
+            text: '大前端课程2021版',
+            link: 'https://class.imooc.com/sale/webfullstack2021'
+          },
+          {
+            text: 'Vue3.0+Vite开发',
+            link: 'https://www.imooc.com/learn/1245'
+          },
+          {
+            text: 'Vue2.x核心技术',
+            link: 'https://www.imooc.com/learn/1091'
+          }
+        ]
+      },
       {
         text: '日志',
         items: [
