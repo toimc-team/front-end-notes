@@ -303,6 +303,11 @@ const sidebar = {
       children: genSidebarConfig('basic/node', siderBarOptions)
     },
     {
+      title: 'Docker',
+      collapsable: false,
+      children: genSidebarConfig('basic/docker', siderBarOptions)
+    },
+    {
       title: 'TypeScript',
       collapsable: false,
       children: genSidebarConfig('basic/ts', siderBarOptions)
